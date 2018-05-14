@@ -2,9 +2,6 @@ package com.pastebin.account.model;
 
 import javax.persistence.*;
 
-import lombok.Data;
-
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity

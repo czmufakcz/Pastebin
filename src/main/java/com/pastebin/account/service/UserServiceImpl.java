@@ -1,6 +1,5 @@
 package com.pastebin.account.service;
 
-import com.pastebin.account.model.Role;
 import com.pastebin.account.model.User;
 import com.pastebin.account.repository.RoleRepository;
 import com.pastebin.account.repository.UserRepository;
