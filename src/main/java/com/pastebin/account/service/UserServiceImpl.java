@@ -1,5 +1,6 @@
 package com.pastebin.account.service;
 
+import com.pastebin.account.model.Role;
 import com.pastebin.account.model.User;
 import com.pastebin.account.repository.RoleRepository;
 import com.pastebin.account.repository.UserRepository;
@@ -7,8 +8,6 @@ import com.pastebin.account.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
