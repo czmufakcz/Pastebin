@@ -12,7 +12,7 @@ public class User {
     private String password;
     private String passwordConfirm;
     private Set<Role> roles;
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Integer getId() {
@@ -58,6 +58,6 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
 	this.roles = roles;
-    }
-
+    }   
+    
 }

@@ -23,7 +23,12 @@
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="packagesToScan" value="com.pastebin.account.model" />
+		<property name="packagesToScan">
+			<array>
+				<value>com.pastebin.account.model</value>
+				<value>com.pastebin.code.model</value>
+			</array>
+		</property>
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
 		</property>
@@ -55,6 +60,6 @@
 	<!-- Configure Spring Data JPA and set the base package of the repository 
 		interfaces -->
 
-	<jpa:repositories base-package="com.pastebin.account.repository" />
+	<jpa:repositories base-package="com.pastebin.account.repository,com.pastebin.code.repository" />
 
 </beans>
