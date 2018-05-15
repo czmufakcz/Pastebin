@@ -1,5 +1,7 @@
 package com.pastebin.code.web;
 
+import java.util.List;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,24 +25,40 @@ public class CodeController {
 
     @RequestMapping(value = { "/", "/welcome" }, method = RequestMethod.GET)
     public String welcome(Model model) {
-	model.addAttribute("codeForm", new Code());
+
+	User user = userService.findByUsername(SecurityContextHolder.getContext()
+								    .getAuthentication()
+								    .getName());
+	List<Code> list = codeService.getCodes(user);
+	model.addAttribute("codes", list);
+
+	Code selectedCode = null;
+	model.addAttribute("selectedCode", selectedCode);
+
 	return "welcome";
     }
 
-    @RequestMapping(value = { "/", "/welcome" }, method = RequestMethod.POST)
-    public String registration(@ModelAttribute("codeForm") Code codeForm, BindingResult bindingResult, Model model) {
+    @RequestMapping(value = { "/createCode" }, method = RequestMethod.GET)
+    public String showCreateCode(Model model) {
+	model.addAttribute("codeForm", new Code());
+	return "createCode";
+    }
+
+    @RequestMapping(value = { "/createCode" }, method = RequestMethod.POST)
+    public String createPost(@ModelAttribute("codeForm") Code codeForm, BindingResult bindingResult, Model model) {
 	// userValidator.validate(userForm, bindingResult);
 
 	if (bindingResult.hasErrors()) {
 	    return "registration";
 	}
+
 	User user = userService.findByUsername(SecurityContextHolder.getContext()
 								    .getAuthentication()
 								    .getName());
 	codeForm.setUser(user);
 	codeService.save(codeForm);
 
-	return "welcome";
+	return "redirect:welcome";
     }
 
 }

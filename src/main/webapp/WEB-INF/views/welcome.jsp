@@ -4,59 +4,62 @@
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-<meta name="description" content="">
-<meta name="author" content="">
+<jsp:include page="header.jsp">
+	<jsp:param name="titlePage" value="Login page" />
+</jsp:include>
+<div class="container">
+	<c:if test="${pageContext.request.userPrincipal.name != null}">
+		<form id="logoutForm" method="POST" action="${contextPath}/logout">
+			<input type="hidden" name="${_csrf.parameterName}"
+				value="${_csrf.token}" />
+		</form>
 
-<title>Welcome</title>
+		<h2>
+			Welcome ${pageContext.request.userPrincipal.name} |
+			<button class="btn btn-primary"
+				onclick="document.forms['logoutForm'].submit()">Logout</button>
+			<a href="${contextPath}/createCode" class="btn btn-primary">Create
+				post</a>
+		</h2>
 
-<link href="${contextPath}/resources/css/bootstrap.min.css"
-	rel="stylesheet">
-
-<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-<!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-</head>
-<body>
-	<div class="container">
-		<c:if test="${pageContext.request.userPrincipal.name != null}">
-			<form id="logoutForm" method="POST" action="${contextPath}/logout">
-				<input type="hidden" name="${_csrf.parameterName}"
-					value="${_csrf.token}" />
-			</form>
-
-			<h2>
-				Welcome ${pageContext.request.userPrincipal.name} | <a
-					onclick="document.forms['logoutForm'].submit()">Logout</a>
-			</h2>
-
-		</c:if>
-
-		<form:form method="POST" modelAttribute="codeForm" class="form-signin">
-			<h2 class="form-signin-heading">Create your code</h2>
-			<spring:bind path="code">
-				<div class="form-group ${status.error ? 'has-error' : ''}">
-					<form:textarea path="code" class="form-control"
-						placeholder="Code" autofocus="true"></form:textarea>
-					<form:errors path="code"></form:errors>
-				</div>
-			</spring:bind>
-
-			<button class="btn btn-lg btn-primary btn-block" type="submit">Save code</button>
-		</form:form>
-
-	</div>
-	<!-- /container -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
-</body>
-</html>
+		<div class="row">
+			<div class="col-md-3">
+				<c:forEach items="${codes}" var="code">
+				    ${code.getTitle()}<br>
+				    ${code.getCode()}<br>
+				</c:forEach>
+			</div>
+			<div class="col-md-9">
+				<c:choose>
+					<c:when test="${empty selectedCode}">
+				        Choose your code.
+				    </c:when>
+					<c:otherwise>
+						<form:form method="POST" modelAttribute="selectedCode"
+							class="form-signin">
+							<h2 class="form-signin-heading">Code</h2>
+							<spring:bind path="title">
+								<div class="form-group ${status.error ? 'has-error' : ''}">
+									<form:input path="title" class="form-control"
+										placeholder="Title" autofocus="true"></form:input>
+									<form:errors path="title"></form:errors>
+								</div>
+							</spring:bind>
+							<spring:bind path="code">
+								<div class="form-group ${status.error ? 'has-error' : ''}">
+									<form:textarea path="code" class="form-control"
+										placeholder="Code" autofocus="true"></form:textarea>
+									<form:errors path="code"></form:errors>
+								</div>
+							</spring:bind>
+							<button class="btn btn-lg btn-primary btn-block" type="submit">Save
+								code</button>
+						</form:form>
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</div>
+	</c:if>
+</div>
+<!-- /container -->
+<jsp:include page="footer.jsp" />
