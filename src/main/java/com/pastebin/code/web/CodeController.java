@@ -1,6 +1,5 @@
 package com.pastebin.code.web;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +16,7 @@ import com.pastebin.code.service.CodeService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class CodeController {
     private final CodeService codeService;
     private final UserService userService;

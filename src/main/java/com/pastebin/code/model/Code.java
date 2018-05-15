@@ -1,5 +1,7 @@
 package com.pastebin.code.model;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,40 +13,23 @@ import javax.persistence.Table;
 
 import com.pastebin.account.model.User;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 @Entity
 @Table(name = "code")
+@Access(AccessType.FIELD)
+@Getter
+@Setter
+@ToString
 public class Code {
-    private Integer id;
-    private String code;
-    private User user;
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public Integer getId() {
-	return id;
-    }
-
-    public void setId(Integer id) {
-	this.id = id;
-    }
-
+    private Integer id;
     @Lob
     @Column(name = "code", nullable = false)
-    public String getCode() {
-	return code;
-    }
-
-    public void setCode(String code) {
-	this.code = code;
-    }
-
+    private String code;
     @ManyToOne
-    public User getUser() {
-	return user;
-    }
-
-    public void setUser(User user) {
-	this.user = user;
-    }
-
+    private User user;
 }

@@ -2,40 +2,24 @@ package com.pastebin.account.model;
 
 import javax.persistence.*;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.util.Set;
 
 @Entity
 @Table(name = "role")
+@Access(AccessType.FIELD)
+@Getter
+@Setter
+@ToString
 public class Role {
-    private Integer id;
-    private String name;
-    private Set<User> users;
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public Integer getId() {
-	return id;
-    }
-
-    public void setId(Integer id) {
-	this.id = id;
-    }
-
+    private Integer id;
     @Column(name = "name", length = 20, nullable = false)
-    public String getName() {
-	return name;
-    }
-
-    public void setName(String name) {
-	this.name = name;
-    }
-
+    private String name;
     @ManyToMany(mappedBy = "roles")
-    public Set<User> getUsers() {
-	return users;
-    }
-
-    public void setUsers(Set<User> users) {
-	this.users = users;
-    }
+    private Set<User> users;
 }

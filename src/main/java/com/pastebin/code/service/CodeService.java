@@ -2,8 +2,6 @@ package com.pastebin.code.service;
 
 import java.util.List;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import com.pastebin.account.model.User;
 import com.pastebin.code.model.Code;
 

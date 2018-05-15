@@ -2,62 +2,29 @@ package com.pastebin.account.model;
 
 import javax.persistence.*;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.util.Set;
 
 @Entity
 @Table(name = "user", uniqueConstraints = { @UniqueConstraint(columnNames = { "username" }) })
+@Access(AccessType.FIELD)
+@Getter
+@Setter
+@ToString
 public class User {
-    private Integer id;
-    private String username;
-    private String password;
-    private String passwordConfirm;
-    private Set<Role> roles;
-    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public Integer getId() {
-	return id;
-    }
-
-    public void setId(Integer id) {
-	this.id = id;
-    }
-
+    private Integer id;
     @Column(name = "username", length = 255, nullable = false)
-    public String getUsername() {
-	return username;
-    }
-
-    public void setUsername(String username) {
-	this.username = username;
-    }
-
+    private String username;
     @Column(name = "password", length = 255, nullable = false)
-    public String getPassword() {
-	return password;
-    }
-
-    public void setPassword(String password) {
-	this.password = password;
-    }
-
+    private String password;
     @Transient
-    public String getPasswordConfirm() {
-	return passwordConfirm;
-    }
-
-    public void setPasswordConfirm(String passwordConfirm) {
-	this.passwordConfirm = passwordConfirm;
-    }
-
+    private String passwordConfirm;
     @ManyToMany
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    public Set<Role> getRoles() {
-	return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-	this.roles = roles;
-    }   
-    
+    private Set<Role> roles;    
 }
