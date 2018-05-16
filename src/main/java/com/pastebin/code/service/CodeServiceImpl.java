@@ -1,6 +1,7 @@
 package com.pastebin.code.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,16 @@ public class CodeServiceImpl implements CodeService {
     @Override
     public void save(Code code) {
 	codeRepository.save(code);
+    }
+
+    @Override
+    public void delete(Integer id) {
+	codeRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<Code> findById(Integer id) {
+	return codeRepository.findById(id);
     }
 
 }

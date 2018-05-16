@@ -25,8 +25,15 @@
 		<div class="row">
 			<div class="col-md-3">
 				<c:forEach items="${codes}" var="code">
+					<a href="${contextPath}/welcome/${code.getId()}">select</a>
+							
 				    ${code.getTitle()}<br>
 				    ${code.getCode()}<br>
+
+					<form action="${contextPath}/removeCode" method="POST">
+						<input name="codeID" type="hidden" value="${code.getId()}" /> <input
+							type="submit" value="delete" onClick="return confirm('sure?')" />
+					</form>
 				</c:forEach>
 			</div>
 			<div class="col-md-9">
@@ -35,9 +42,12 @@
 				        Choose your code.
 				    </c:when>
 					<c:otherwise>
-						<form:form method="POST" modelAttribute="selectedCode"
-							class="form-signin">
-							<h2 class="form-signin-heading">Code</h2>
+						<form:form method="POST" action="${contextPath}/updateCode"
+							modelAttribute="selectedCode" class="form-signin">
+							<h2 class="form-signin-heading">Edit your code</h2>
+							<spring:bind path="id">
+								<form:input path="id" type="hidden"></form:input>
+							</spring:bind>
 							<spring:bind path="title">
 								<div class="form-group ${status.error ? 'has-error' : ''}">
 									<form:input path="title" class="form-control"
